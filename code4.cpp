@@ -1,144 +1,186 @@
 #include <iostream>
 using namespace std;
-
-class Point {
+class Point
+{
 public:
-	Point();
-	
-	Point (int xval, int yval);
-	
-	void Move (int dx, int dy);
-	
-	int Get_X() const;
-	int Get_Y() const;
-	
-	void Set_X(int xval);
-	void Set_Y(int yval);
-	
-	void print() const;
-	
-private:
-	int X;
-	int Y;
-};
+  // default class constructor (with no arguments):
+  Point(); 
 
-Point::Point() {
-	X = 0;
-	Y = 0;
-}
+  // class constructor that sets the coordinates x, y to the values xval,
+  // yval:
+  Point(int xval, int yval);
 
-Point::Point(int xval, int yval) {
-	X = xval;
-	Y = yval;
-}
+  // member function for moving a point by dx, dy:
+  void Move(int dx, int dy);
 
-void Point::Move(int dx, int dy) {
-	X += dx;
-	Y += dy;
-}
+  // member functions for getting values of x, y:
+  int Get_X() const;
+  int Get_Y() const;
 
-int Point::Get_X() const {
-	return X;
-}
+  // member functions for setting x, y to xval, yval respectively  
+  void Set_X(int xval);
+  void Set_Y(int yval);
 
-int Point::Get_Y() const {
-	return Y;
-}
+//Lab 7 exercise 4.1. Add declaration of member function Print here:
+  void Print();
 
-void Point::Set_X(int xval) {
-	X = xval;
-}
-
-void Point::Set_Y(int yval) {
-	Y = yval;
-}
-
-void Point::print() const {
-	cout << "(" << X << ", " << Y << ")" << endl;
-}
-
-class Rectangle {
-	Point bottomleft, bottomright, topleft, topright;
-	
-	int side1();
-	int side2();
-	
+// private data members x, y represent coordinates of the point:
 public:
-	Rectangle(Point bottomleft, Point topright);
-	Rectangle();
-	
-	Point getBottomLeft();
-	Point getBottomRight();
-	Point getTopLeft();
-	Point getTopRight();
-	
-	void print();
-	
-	int area();
+  int X;
+  int Y;
+};  
+
+
+// ********************************************************************
+//  Methods for class Point
+// ********************************************************************
+
+// class constructor sets X, Y to zero when no values are specified:
+Point::Point()
+{
+  X = 0;
+  Y = 0;
+}
+
+// class constructor sets X, Y to given values xval, yval:
+Point::Point(int xval, int yval)
+{
+  X = xval;
+  Y = yval;
+}
+
+// member function Move: increases the x coordinate by dx and the y
+// coordinate by dy.
+void Point::Move(int dx, int dy)
+{
+  X += dx;
+  Y += dy;
+}
+
+// Get_X returns the value of the X coordinate
+int Point::Get_X() const
+{
+  return X;
+}
+
+// Get_Y returns the value of the Y coordinate
+int Point::Get_Y() const
+{
+  return Y;
+}
+
+// Set_X sets the value of X coordinate to xval
+void Point::Set_X(int xval)
+{
+  X = xval;
+} 
+
+// Set_Y sets the value of Y coordinate to yval
+void Point::Set_Y(int yval)
+{
+  Y = yval;
+} 
+    
+
+//Lab 7 exercise 4.1. Add definition of member function print:
+void Point::Print()
+{cout<<"("<<X<<","<<Y<<")";}
+
+
+// ********************************************************************
+//  Declaration of class Rectangle
+// ********************************************************************
+
+//Lab 7 exercise 4.2, 4.3: Add class Rectangle declaration HERE: 
+class Rectangle:public Point
+{private:
+Point a1;
+Point a2;
+Point a3;
+Point a4;
+int l1;
+int l2;
+public:
+ Rectangle()
+ {a1.Set_X(0);
+  a1.Set_Y(0);
+  a2.Set_X(0);
+  a2.Set_Y(1);
+  a3.Set_X(1);
+  a3.Set_Y(0);
+  a4.Set_X(1);
+  a4.Set_Y(1);}
+ Rectangle(Point a,Point b)
+ {a1.Set_X(a.X);
+  a1.Set_Y(a.Y);
+  a2.Set_X(a.X);
+  a2.Set_Y(b.Y);
+  a3.Set_X(b.X);
+  a3.Set_Y(b.Y);
+  a4.Set_X(b.X);
+  a4.Set_Y(a.Y);}
+  void Print()
+  {a1.Print();
+  cout<<"\n";
+  a2.Print();
+  cout<<"\n";
+  a3.Print();
+  cout<<"\n";
+  a4.Print();
+  cout<<"\n";}
+  void side1()
+  {l1=a2.Y-a1.Y;}
+  void side2()
+  {l2=a3.X-a2.X;}
+  void area()
+  {cout<<"The area of the rectangle is "<<l1*l2;}
+  
 };
+// ********************************************************************
+//  Methods for class Rectangle
+// ********************************************************************
 
-Rectangle::Rectangle(Point bottomleft, Point topright){
-	int trX = topright.Get_X();
-	int blY = bottomleft.Get_Y();
-	bottomright.Set_X(trX);
-	bottomright.Set_Y(blY);
-	
-	int trY = topright.Get_Y();
-	int blX = bottomleft.Get_X();
-	topleft.Set_X(blX);
-	topleft.Set_Y(trY);
-}
+//Lab 7 exercise 4.2, 4.3. Add class Rectangle methods HERE: 
 
-Rectangle::Rectangle() {
-	bottomleft.Set_X(0);
-	bottomleft.Set_Y(0);
-	
-	bottomright.Set_X(1);
-	bottomright.Set_Y(0);
-	
-	topleft.Set_X(0);
-	topleft.Set_Y(1);
-	
-	topright.Set_X(1);
-	topright.Set_Y(1);
-}
 
-Point Rectangle::getBottomLeft() {
-	return bottomleft;
-}
 
-Point Rectangle::getBottomRight() {
-	return bottomright;
-}
+// ********************************************************************
+//  main() function for testing classes Point and Rectangle
+// ********************************************************************
 
-Point Rectangle::getTopLeft() {
-	return topleft;
-}
 
-Point Rectangle::getTopRight() {
-	return topright;
-}
 
-int Rectangle::side1() {
-	return topright.Get_X() - bottomleft.Get_X();
-}
+// Testing classes Point and Rectangle
+int main()
+{
+// Declaring a point using default class constructor (x = y = 0):
+  Point p1;
+  cout<< "The x value for p1 is " << p1.Get_X() << endl;
+  cout<< "The y value for p1 is " << p1.Get_Y() << endl;
 
-int Rectangle::side2() {
-	return topright.Get_Y() - bottomleft.Get_Y();
-}
+// Declaring a point with coordinates X = 2, Y = 3:
+  Point p2(2, 3);
+  cout<< "The x value for p2 is " << p2.Get_X() << endl;
+  cout<< "The y value for p2 is " << p2.Get_Y() << endl;
 
-void Rectangle::print() {
-	bottomleft.print();
-	bottomright.print();
-	topleft.print();
-	topright.print();
-}
+// Moving point p2 by (1, -1):
+  p2.Move(1, -1);
+  cout<< "After the move:" << endl;
+  cout<< "The x value for p2 is " << p2.Get_X() << endl;
+  cout<< "The y value for p2 is " << p2.Get_Y() << endl;
 
-int Rectangle::area() {
-	return (*this).side1() * (*this).side2();
-}
+//Lab 7 exercise 4.1. Test member function print on points p1, p2:
+ p1.Print();
+ cout<<"\n";
+ p2.Print();
+ cout<<"\n";
 
-int main() {
-	
-	return 0;
+//Lab 7 Exercises 4.2, 4.3. Testing of the class Rectangle goes here:  
+Rectangle r1(p1,p2);
+r1.Print();
+cout<<"\n";
+r1.side1();
+r1.side2();
+r1.area();
+  return 0;
 }
